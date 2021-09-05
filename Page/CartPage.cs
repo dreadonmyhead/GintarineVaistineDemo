@@ -15,7 +15,8 @@ namespace draft.Page
             for (int i = 1; i < 5; i++)
             {
                 increaseQuantity.Click();
-                Thread.Sleep(4000); //TODO
+                GetWait().Until(ExpectedConditions.InvisibilityOfElementLocated(By.CssSelector(".master-loading-overlay")));
+
             }
         }
 

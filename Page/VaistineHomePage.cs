@@ -1,14 +1,14 @@
-﻿using OpenQA.Selenium;
-using OpenQA.Selenium.Support.UI;
+using System;
+using System.Linq;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Interactions;
 
 namespace draft.Page
 {
     public class VaistineHomePage : BasePage
     {
         private const string PageAddress = "https://www.gintarine.lt/";
-        private IWebElement cookieButton => Driver.FindElement(By.Id("CybotCookiebotDialogBodyLevelButtonLevelOptinAllowAll"));
-        private IWebElement searchField => Driver.FindElement(By.Id("small-searchterms"));
-        private IWebElement searchIcon => Driver.FindElement(By.CssSelector(".button-1.search-box-button"));
+        private IWebElement searchField => Driver.FindElements(By.Id("small-searchterms")).ElementAt(1);
         public VaistineHomePage(IWebDriver webdriver) : base(webdriver) { }
 
         public void NavigateToPage()
@@ -19,21 +19,28 @@ namespace draft.Page
 
         public void CloseCookies()
         {
-            GetWait().Until(ExpectedConditions.ElementIsVisible(By.Id("CybotCookiebotDialogBodyLevelButtonLevelOptinAllowAll")));
-            cookieButton.Click();
+            Cookie cookie = new Cookie("CookieConsent",
+                "{stamp:%27zHL4ElaTszQJp0PoqUYD8oWrhbzy0BsF3GeMApm27rrdTO5JTWsxTg==%27%2Cnecessary:true%2Cpreferences:true%2Cstatistics:true%2Cmarketing:true%2Cver:5%2Cutc:1667636298168%2Cregion:%27lt%27}",
+                "www.gintarine.lt",
+                "/",
+                DateTime.Now.AddDays(5));
+            Driver.Manage().Cookies.AddCookie(cookie);
+            Driver.Navigate().Refresh();
         }
 
         public void SearchByText(string text)
         {
-            searchField.Clear();
+            searchField.Click();
             searchField.SendKeys(text);
-            searchIcon.Click();
+            ClickOnSearchIcon();
         }
 
         public void ClickOnSearchIcon()
         {
-            searchIcon.Click();
+            Actions action = new Actions(Driver);
+            action.KeyDown(Keys.Enter);
+            action.KeyUp(Keys.Enter);
+            action.Build().Perform();
         }
-
     }
 }

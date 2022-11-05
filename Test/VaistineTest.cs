@@ -3,7 +3,7 @@
 namespace draft.Test
 {
     public class VaistineTest : BaseTest
-    {
+    {  
         [Test]
         public static void TestMollersPrice()
         {
@@ -11,7 +11,7 @@ namespace draft.Test
             _vaistineHomePage.CloseCookies();
             _vaistineHomePage.SearchByText("Moller");
             _vaistineSearchResultPage.OrderByHighestPrice();
-            _vaistineSearchResultPage.VerifyPrice("18,89€");
+            _vaistineSearchResultPage.VerifyPrice("20,04€");
         }
 
         [Test]
@@ -21,8 +21,9 @@ namespace draft.Test
             _vaistineHomePage.CloseCookies();
             _vaistineHomePage.SearchByText("Moller");
             _vaistineSearchResultPage.OrderByHighestPrice();
-            _vaistineSearchResultPage.AddToCard();
-            _cartPage.InsertQuantity();
+            _vaistineSearchResultPage.AddToCart();
+            _vaistineSearchResultPage.GoToCart();
+            _cartPage.InsertQuantity(5);
             _cartPage.VerifyIfICanBuy(100);
 
         }

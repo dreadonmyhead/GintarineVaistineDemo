@@ -7,10 +7,10 @@ namespace draft.Test
 {
     public class BaseTest
     {
-        public static IWebDriver driver;
-        public static VaistineSearchResultPage _vaistineSearchResultPage;
-        public static VaistineHomePage _vaistineHomePage;
-        public static CartPage _cartPage;
+        private static IWebDriver driver;
+        protected static VaistineSearchResultPage _vaistineSearchResultPage;
+        protected static VaistineHomePage _vaistineHomePage;
+        protected static CartPage _cartPage;
 
 
         [OneTimeSetUp]
